@@ -1,0 +1,30 @@
+spring:
+  profiles:
+    active: dev
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+  jpa:
+    show-sql: true
+  datasource:
+    username: root
+    password:
+    url: jdbc:mysql://localhost:3306/solution_challenge
+  
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    username: ${MYSQL_USERNAME}
+    password: ${MYSQL_PASSWORD}
+    url: ${MYSQL_HOST}
