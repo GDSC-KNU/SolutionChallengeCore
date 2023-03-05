@@ -7,8 +7,8 @@ import jakarta.persistence.Id
 
 @Entity
 class Item (
-    var name: String = "",
-    var category: String = ""
+    var name: String,
+    var category: String
 ) {
     
     @Id
