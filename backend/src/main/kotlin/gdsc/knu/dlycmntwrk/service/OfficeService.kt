@@ -2,6 +2,7 @@ package gdsc.knu.dlycmntwrk.service
 
 import gdsc.knu.dlycmntwrk.domain.Office
 import gdsc.knu.dlycmntwrk.dto.AddOfficeDto
+import gdsc.knu.dlycmntwrk.dto.FindOfficesRequest
 import gdsc.knu.dlycmntwrk.repository.OfficeRepository
 import org.locationtech.jts.geom.Point
 import org.locationtech.jts.io.WKTReader
@@ -14,7 +15,15 @@ class OfficeService(
     private val officeRepository: OfficeRepository
 ) {
     private val wktReader = WKTReader()
-    
+
+    fun findOffices(findOfficesRequest: FindOfficesRequest): List<Office> {
+        val lineString = with(findOfficesRequest) {
+            "LINESTRING($swLongitude $swLatitude, $enLongitude $enLatitude)"
+        }
+
+        return officeRepository.findAllByLocationsBetween(lineString)
+    }
+
     @Transactional
     fun addOffice(officeDto: AddOfficeDto) {
         val office = Office(
@@ -30,4 +39,5 @@ class OfficeService(
 
         return wktReader.read(pointWKT) as Point
     }
+
 }
