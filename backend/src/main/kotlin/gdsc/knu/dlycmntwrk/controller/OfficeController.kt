@@ -1,9 +1,6 @@
 package gdsc.knu.dlycmntwrk.controller
 
-import gdsc.knu.dlycmntwrk.dto.AddOfficeDto
-import gdsc.knu.dlycmntwrk.dto.FindOfficesRequest
-import gdsc.knu.dlycmntwrk.dto.FindOfficesResponse
-import gdsc.knu.dlycmntwrk.dto.officeToOfficeForList
+import gdsc.knu.dlycmntwrk.dto.*
 import gdsc.knu.dlycmntwrk.service.OfficeService
 import org.springframework.web.bind.annotation.*
 
@@ -17,9 +14,17 @@ class OfficeController(
     fun findOffices(findOfficesRequest: FindOfficesRequest): FindOfficesResponse {
         val offices = officeService
             .findOffices(findOfficesRequest)
-            .map { officeToOfficeForList(it) }
+            .map { officeToOfficeForListDto(it) }
 
         return FindOfficesResponse(offices = offices)
+    }
+
+    @GetMapping("/{officeId}")
+    fun findOffice(@PathVariable officeId: Long): FindOfficeResponse {
+        val office = officeService.findOffice(officeId).orElseThrow { NotFoundException() }
+        val officeDto = officeToOfficeDto(office)
+
+        return FindOfficeResponse(office = officeDto)
     }
 
     @PostMapping("")

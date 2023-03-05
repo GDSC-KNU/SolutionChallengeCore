@@ -8,6 +8,7 @@ import org.locationtech.jts.geom.Point
 import org.locationtech.jts.io.WKTReader
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.util.*
 
 @Service
 @Transactional(readOnly = true)
@@ -23,6 +24,8 @@ class OfficeService(
 
         return officeRepository.findAllByLocationsBetween(lineString)
     }
+
+    fun findOffice(officeId: Long): Optional<Office> = officeRepository.findById(officeId)
 
     @Transactional
     fun addOffice(officeDto: AddOfficeDto) {

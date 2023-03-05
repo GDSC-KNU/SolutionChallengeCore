@@ -9,7 +9,7 @@ data class OfficeForList(
     val longitude: Double
 )
 
-fun officeToOfficeForList(office: Office): OfficeForList {
+fun officeToOfficeForListDto(office: Office): OfficeForList {
     return OfficeForList(
         id = office.id!!,
         name = office.name,
