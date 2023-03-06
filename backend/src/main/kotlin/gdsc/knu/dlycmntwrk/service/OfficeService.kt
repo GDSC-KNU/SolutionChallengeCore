@@ -27,6 +27,8 @@ class OfficeService(
 
     fun findOffice(officeId: Long): Optional<Office> = officeRepository.findById(officeId)
 
+    fun findOfficesByIds(officeIds: List<Long>): List<Office> = officeRepository.findAllById(officeIds)
+
     @Transactional
     fun addOffice(officeDto: AddOfficeDto) {
         val office = Office(

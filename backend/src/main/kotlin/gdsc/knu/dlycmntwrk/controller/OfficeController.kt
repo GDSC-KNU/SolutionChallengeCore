@@ -19,6 +19,15 @@ class OfficeController(
         return FindOfficesResponse(offices = offices)
     }
 
+    @GetMapping("/detail")
+    fun findOfficesByIds(@RequestParam(name = "ids") officeIds: List<Long>): FindOfficesByIdsResponse {
+        val offices = officeService
+            .findOfficesByIds(officeIds)
+            .map { officeToOfficeDto(it) }
+
+        return FindOfficesByIdsResponse(offices = offices)
+    }
+
     @GetMapping("/{officeId}")
     fun findOffice(@PathVariable officeId: Long): FindOfficeResponse {
         val office = officeService.findOffice(officeId).orElseThrow { NotFoundException() }
@@ -26,6 +35,7 @@ class OfficeController(
 
         return FindOfficeResponse(office = officeDto)
     }
+
 
     @PostMapping("")
     fun addOffice(@RequestBody addOfficeDto: AddOfficeDto) {
